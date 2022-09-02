@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
     while(1)
     {
         if (tm_is_timeout(timer)) {
-            PRINT_DEBUG(" !! timer is timeout !!\n", __func__);
+            PRINT_DEBUG(" !! timer is timeout !!\n");
             tm_set_ms(&timer, 5000);
 
             Timer test = {0};

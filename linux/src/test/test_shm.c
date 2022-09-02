@@ -57,7 +57,7 @@ char usage[] =
 int main(int argc, char *argv[])
 {
     if (argc < 2) {
-        printf(usage);
+        printf("%s", usage);
         exit(EXIT_FAILURE);
     }
 
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     while((opt = getopt_long(argc, argv, "", opt_ls, &opt_idx)) != -1)
     {
         if (opt != 0) {
-            printf(usage);
+            printf("%s", usage);
             exit(EXIT_FAILURE);
         }
 

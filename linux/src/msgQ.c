@@ -102,10 +102,10 @@ int msgQ_clt_send(msgQ_clt *client, uint8_t *data, size_t len)
         if (errno == EINTR) {
             continue;
         } else if (errno == EAGAIN) {
-            PRINT_ERR("%s() Queue %d is full (EAGAIN) \n", __func__);
+            PRINT_ERR("%s() Queue %d is full (EAGAIN) \n", __func__, client->srvQ);
             return -1;
         } else {
-            PRINT_ERR("%s() Queue %d : %s \n", __func__, strerror(errno));
+            PRINT_ERR("%s() Queue %d : %s \n", __func__, client->srvQ, strerror(errno));
             return -1;
         }
     }
@@ -435,7 +435,7 @@ int msgQ_srv_del(msgQ_srv *server, msgQ_eve_clt *del_client)
         client = client->next;
     }
 
-    PRINT_ERR("%s() client %X not found.\n", __func__, del_client);
+    PRINT_ERR("%s() client %p not found.\n", __func__, del_client);
     return -1;
 }
 
@@ -698,10 +698,10 @@ int msgQ_srv_monitorrequest(msgQ_srv *server, int tout)
         if (errno == EINTR) {
             continue;
         } else if (errno == EAGAIN) {
-            PRINT_ERR("%s() Queue %d is full (EAGAIN) \n", __func__);
+            PRINT_ERR("%s() Queue %d is full (EAGAIN) \n", __func__, client->qid);
             return -1;
         } else {
-            PRINT_ERR("%s() Queue %d : %s \n", __func__, strerror(errno));
+            PRINT_ERR("%s() Queue %d : %s \n", __func__, client->qid, strerror(errno));
             server->del(server, client);
             return -1;
         }

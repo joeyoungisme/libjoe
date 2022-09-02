@@ -32,7 +32,7 @@ void *omalloc(char *dec, size_t size)
 
         time_t now;
         time(&now);
-        snprintf(mem_manager[idx].dec, 64, "[%d] %s", now, dec);
+        snprintf(mem_manager[idx].dec, 64, "[%ld] %s", now, dec);
         mem_manager[idx].addr = space;
         mem_manager[idx].size = size;
 
@@ -68,7 +68,7 @@ void mem_show(void)
     for (int idx = 0; idx < MEMORY_ALLOCATE_MAX_TIMES; ++idx) {
         if (!mem_manager[idx].addr) { continue; }
 
-        printf("%-32s : 0x%X ( %d Byte )\n", mem_manager[idx].dec, mem_manager[idx].addr, mem_manager[idx].size);
+        printf("%-32s : 0x%p ( %ld Byte )\n", mem_manager[idx].dec, mem_manager[idx].addr, mem_manager[idx].size);
     }
     printf(" ----------------------\n");
 }

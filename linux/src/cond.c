@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
-
 #include <pthread.h>
 
 #include "misc.h"

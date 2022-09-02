@@ -5,7 +5,7 @@ OBJ=$(patsubst %.c,%.o,$(wildcard src/*.c))
 
 INCLUDE+= -I ./include/
 
-LIBS+=-lpthread
+LIBS+=-lpthread -pthread
 
 BUILD_DIR=build
 
