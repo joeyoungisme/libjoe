@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <getopt.h>
 #include <string.h>
 #include <errno.h>
@@ -62,14 +63,14 @@ int main(int argc, char *argv[])
 
     PRINT_DEBUG("Send : %s\n", data);
 
-    int res = srl->send(srl, data, strlen(data));
+    int res = srl->send(srl, (uint8_t*)data, strlen(data));
     if (res < 0) {
         PRINT_ERR("%s() srl send failed (%d).\n", __func__, res);
         exit(EXIT_FAILURE);
     }
 
     char buff[2048] = {0};
-    res = srl->recv(srl, buff, sizeof(buff));
+    res = srl->recv(srl, (uint8_t*)buff, sizeof(buff));
     if (res < 0) {
         PRINT_ERR("%s() srl recv failed (%d).\n", __func__, res);
         exit(EXIT_FAILURE);

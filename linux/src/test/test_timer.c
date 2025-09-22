@@ -14,9 +14,6 @@
 
 int main(int argc, char *argv[])
 {
-    int role = 0;
-    char key[64] = {0};
-
     int opt = 0;
     while((opt = getopt(argc, argv, "sckd:")) != -1)
     {

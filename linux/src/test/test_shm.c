@@ -14,7 +14,6 @@
 
 #include "shm.h"
 
-
 const struct option opt_ls[] = {
     {"file2key",    required_argument,  NULL, 0},
     {NULL, 0, NULL, 0}

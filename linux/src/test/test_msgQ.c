@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdarg.h>
-#include <errno.h>
+// #include <errno.h>
 #include <time.h>
 #include <fcntl.h>
 
@@ -14,7 +14,7 @@
 #include <sys/msg.h>
 
 #include "misc.h"
-#include "mem.h"
+// #include "mem.h"
 #include "timer.h"
 #include "msgQ.h"
 
@@ -46,7 +46,7 @@ void msgQ_client(void)
     while(1)
     {
         if (bflag) {
-            PRINT_DEBUG("----- Broadcast -----\n");
+            // PRINT_DEBUG("----- Broadcast -----\n");
             // monitor
             if (!clt->request_event(clt, "testQ", clt_event_handler)) {
                 int moni_res = clt->monitor_event(clt, 500);
@@ -60,7 +60,7 @@ void msgQ_client(void)
             } else {
                 PRINT_ERR("request_event failed.\n");
             }
-            PRINT_DEBUG("---------------------\n");
+            // PRINT_DEBUG("---------------------\n");
         }
 
 
@@ -70,15 +70,15 @@ void msgQ_client(void)
 
         if (aflag) {
 
-            PRINT_DEBUG("----- Ask/Ack -----\n");
+            // PRINT_DEBUG("----- Ask/Ack -----\n");
             // Send Ask 
-            if (clt->send(clt, "Ask", 3)) {
+            if (clt->send(clt, (uint8_t *)"Ask", 3)) {
                 PRINT_ERR("msgQ client send failed\n");
             }
 
             // Recv Ack
             char rbuff[128] = {0};
-            int res = clt->recv(clt, rbuff, 128, 5000);
+            int res = clt->recv(clt, (uint8_t *)rbuff, 128, 5000);
             if (res > 0) {
                 // PRINT_DEBUG("msgQ client recv timeout\n");
             } else if (res < 0) {
@@ -87,7 +87,7 @@ void msgQ_client(void)
                 PRINT_DEBUG("msgQ client (%d) recv : %s\n", getpid(), rbuff);
             }
 
-            PRINT_DEBUG("-------------------\n");
+            // PRINT_DEBUG("-------------------\n");
         }
     }
 }
@@ -113,10 +113,10 @@ void msgQ_server(void)
     while(1)
     {
         if (aflag) {
-            PRINT_DEBUG("----- Ask/Ack -----\n");
+            // PRINT_DEBUG("----- Ask/Ack -----\n");
             // Recv Ask
             char rbuff[128] = {0};
-            int recv_res = srv->recv(srv, rbuff, 128, 500);
+            int recv_res = srv->recv(srv, (uint8_t *)rbuff, 128, 500);
             if (recv_res > 0) {
                 // PRINT_DEBUG("msgQ server recv timeout\n");
             } else if (recv_res < 0) {
@@ -125,15 +125,15 @@ void msgQ_server(void)
                 PRINT_DEBUG("msgQ server (%d) recv : %s\n", getpid(), rbuff);
 
                 // Send Ack
-                if (srv->send(srv, "Ack", 3)) {
+                if (srv->send(srv, (uint8_t *)"Ack", 3)) {
                     PRINT_ERR("msgQ server send failed\n");
                 }
             }
-            PRINT_DEBUG("-------------------\n");
+            // PRINT_DEBUG("-------------------\n");
         }
 
         if (bflag) {
-            PRINT_DEBUG("----- Broadcast -----\n");
+            // PRINT_DEBUG("----- Broadcast -----\n");
             // monitor 500ms
             int moni_res = srv->monitor_request(srv, 500);
             if (moni_res > 0) {
@@ -153,10 +153,10 @@ void msgQ_server(void)
             if (tm_is_timeout(event_timer)) {
                 char eve_str[] = "!!!! Server Broadcast !!!!";
                 PRINT_DEBUG("server send event : %s\n", eve_str);
-                srv->send_event(srv, eve_str, strlen(eve_str));
+                srv->send_event(srv, (uint8_t *)eve_str, strlen(eve_str));
                 tm_set_ms(&event_timer, 5000);
             }
-            PRINT_DEBUG("---------------------\n");
+            // PRINT_DEBUG("---------------------\n");
         }
     }
 }
